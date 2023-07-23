@@ -88,21 +88,39 @@ class ThirdBody extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 500),
                   height: 57,
-                  width: Get.width,
-                  child: BaseButton(
-                    text: 'Verifikasi Kode OTP',
-                    bold: FontWeight.bold,
-                    size: 20,
+                  width: controller.otpLoading.value ? 70 : Get.width,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: controller.otpLoading.value
+                          ? const CircleBorder()
+                          : RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                    ),
                     onPressed: () {
                       if (controller.otpInput.value != controller.otp.value) {
                         controller.otpValidator.value = true;
                       } else {
                         controller.otpValidator.value = false;
+                        controller.otpLoading.value = true;
                         controller.verifikasiSukses();
                       }
                     },
+                    child: controller.otpLoading.value
+                        ? const CircularProgressIndicator(color: Colors.black)
+                        : const Text(
+                            'Verifikasi OTP',
+                            maxLines: 1,
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
               ],

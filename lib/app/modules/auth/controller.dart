@@ -25,6 +25,7 @@ class Authcontroller extends GetxController {
   final otpInput = ''.obs;
   final otp = '1234'.obs;
   final otpValidator = false.obs;
+  final otpLoading = false.obs;
 
   void loginNoTelp() {
     pageController.value.nextPage(
@@ -40,10 +41,13 @@ class Authcontroller extends GetxController {
     );
   }
 
-  void verifikasiSukses() {
-    pageController.value.nextPage(
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeIn,
-    );
+  void verifikasiSukses() async {
+    await Future.delayed(const Duration(milliseconds: 2500), () {
+      otpLoading.value = false;
+      pageController.value.nextPage(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeIn,
+      );
+    });
   }
 }
